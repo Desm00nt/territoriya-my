@@ -11,11 +11,9 @@ import {
   Calendar,
   Users,
   Shield,
-  Heart,
   Star,
   MapPin,
   Phone,
-  Mail,
   Clock,
   ChevronDown,
   ChevronUp,
@@ -25,12 +23,16 @@ import {
   Brain,
   Briefcase,
   Dice5,
-  Music,
   GraduationCap,
-  Sparkles,
+  FileText,
+  UserCheck,
+  CreditCard,
+  ExternalLink,
 } from 'lucide-react'
 
-/* ───────────── real data from VK ───────────── */
+/* ───────────── данные из VK ───────────── */
+
+const GOOGLE_FORM_URL = 'https://forms.google.com' // заменить на реальную ссылку
 
 const shifts = [
   {
@@ -40,9 +42,9 @@ const shifts = [
     type: 'Игровая ролевая смена',
     price: '69 800',
     description:
-      'Удивительное погружение в захватывающие сюжеты мировых шедевров XVIII века! Иммерсивное путешествие с квестами, сюжетно-ролевыми играми, мистериями, приключениями и испытаниями. Каждый участник примерит на себя образы исторических персонажей и окажется в центре запутанной и увлекательной истории!',
-    image: '/tm-quest.png',
-    icon: <Gamepad2 className="h-6 w-6" />,
+      'Удивительное погружение в захватывающие сюжеты мировых шедевров XVIII века! Иммерсивное путешествие с квестами, сюжетно-ролевыми играми, мистериями, приключениями и испытаниями. Каждый участник примерит на себя образы исторических персонажей.',
+    color: 'from-amber-500/80 to-orange-600/80',
+    icon: <Gamepad2 className="h-10 w-10 text-white/90" />,
     popular: false,
   },
   {
@@ -52,9 +54,9 @@ const shifts = [
     type: 'Психологическая гендерная смена',
     price: '74 500',
     description:
-      'Этика и психология отношений. Только в мужском кругу мальчик обретает уверенность, ответственность и целеустремлённость. Только в женском кругу девочка учится создавать уют и атмосферу, заботиться, умению слушать и понимать. Про мужественность и женственность, про дружбу, доверие и уважение.',
-    image: '/tm-psychology.png',
-    icon: <Brain className="h-6 w-6" />,
+      'Этика и психология отношений. Только в мужском кругу мальчик обретает уверенность, ответственность и целеустремлённость. Только в женском кругу девочка учится создавать уют, заботиться, слушать и понимать. Про дружбу, доверие и уважение.',
+    color: 'from-rose-500/80 to-pink-600/80',
+    icon: <Brain className="h-10 w-10 text-white/90" />,
     popular: true,
   },
   {
@@ -65,9 +67,9 @@ const shifts = [
     price: '72 700',
     priceNote: 'English Camp Family — 76 300 ₽',
     description:
-      'Путь к самореализации и успешному будущему! Множество профилей на выбор: English Camp Family, Бизнес-школа, Школа международных отношений, Театральное искусство, Игротехнологии, КВН и стендап, Психология общения. Каждый профиль помогает проявить себя на все 103%!',
-    image: '/tm-prof.png',
-    icon: <Briefcase className="h-6 w-6" />,
+      'Путь к самореализации и успешному будущему! Множество профилей на выбор: English Camp Family, Бизнес-школа, Школа международных отношений, Театральное искусство, Игротехнологии, КВН и стендап, Психология общения.',
+    color: 'from-sky-500/80 to-blue-600/80',
+    icon: <Briefcase className="h-10 w-10 text-white/90" />,
     popular: false,
   },
   {
@@ -77,49 +79,49 @@ const shifts = [
     type: 'Фестиваль игр',
     price: '32 200',
     description:
-      'Большой фестиваль игр всех форматов: спортивные, настольные, командные, стратегические, виртуальные, ролевые, игровые чемпионаты и игры-испытания! Место, где ты максимально сможешь показать, чего ты стоишь. Игра поможет развить коммуникации, лидерские качества и умение достигать целей.',
-    image: '/tm-games.png',
-    icon: <Dice5 className="h-6 w-6" />,
+      'Большой фестиваль игр всех форматов: спортивные, настольные, командные, стратегические, виртуальные, ролевые, игровые чемпионаты и игры-испытания! Игра поможет развить коммуникации, лидерские качества и умение достигать целей.',
+    color: 'from-violet-500/80 to-purple-600/80',
+    icon: <Dice5 className="h-10 w-10 text-white/90" />,
     popular: false,
   },
 ]
 
 const advantages = [
   {
-    icon: <Trophy className="h-8 w-8" />,
+    icon: <Trophy className="h-7 w-7" />,
     title: '1-е место в рейтинге лагерей РТ',
     description:
-      'Лучший республиканский лагерь Татарстана по оценкам экспертов и родителей. Бренд, который широко известен по всему Татарстану и за его пределами. Тщательный отбор и подготовка вожатых, высокий уровень организации, многолетние традиции.',
+      'Лучший республиканский лагерь Татарстана по оценкам экспертов и родителей. Тщательный отбор вожатых, высокий уровень организации, многолетние традиции.',
   },
   {
-    icon: <Calendar className="h-8 w-8" />,
+    icon: <Calendar className="h-7 w-7" />,
     title: '27 лет опыта',
     description:
-      'С 1999 года мы создаём уникальные программы и помогаем детям стать личностью. Более двух десятилетий авторских методик, проверенных практикой. Каждый год тысячи школьников возвращаются к нам снова и снова.',
+      'С 1999 года мы создаём уникальные программы и помогаем детям стать личностью. Каждый год школьники возвращаются к нам снова и снова.',
   },
   {
-    icon: <Sparkles className="h-8 w-8" />,
+    icon: <Users className="h-7 w-7" />,
     title: 'Эксклюзивные авторские программы',
     description:
-      'Каждая смена — уникальный проект с глубоким смыслом. Квесты, ролевые игры, психологические тренинги, профориентация, мастер-классы, вечеринки, театральные постановки и задушевные традиции. Новые фишки и события каждую смену.',
+      'Квесты, ролевые игры, психологические тренинги, профориентация, мастер-классы, театр, вечеринки. Новые фишки каждую смену.',
   },
   {
-    icon: <Users className="h-8 w-8" />,
+    icon: <Star className="h-7 w-7" />,
     title: 'Опытная педагогическая команда',
     description:
-      'Профессиональные педагоги, психологи, аниматоры и наставники с многолетним стажем работы. Атмосфера доверия и принятия, в которой каждый ребёнок чувствует себя значимым и любимым.',
+      'Профессиональные педагоги, психологи, аниматоры и наставники. Атмосфера доверия и принятия, в которой каждый ребёнок чувствует себя значимым.',
   },
   {
-    icon: <Shield className="h-8 w-8" />,
+    icon: <Shield className="h-7 w-7" />,
     title: 'Безопасность и комфорт',
     description:
-      'Комфортабельное размещение в 3-4-местных номерах с туалетом и душем в каждом номере. Качественное улучшенное питание, медицинский кабинет, пост охраны и круглосуточная вахта. Живописная природа ГК «Регина» в г. Мамадыш.',
+      '3-4-местные номера с душем, качественное питание, медкабинет, охрана, круглосуточная вахта. ГК «Регина», г. Мамадыш.',
   },
   {
-    icon: <GraduationCap className="h-8 w-8" />,
+    icon: <GraduationCap className="h-7 w-7" />,
     title: '4 возрастные программы',
     description:
-      'Супердетская (1-3 классы), детская (4-5 классы), подростковая (6-7 классы) и молодёжная (8-11 классы) программы. Каждая адаптирована под возрастные особенности и интересы участников.',
+      'Супердетская (1-3 кл.), детская (4-5 кл.), подростковая (6-7 кл.), молодёжная (8-11 кл.). Адаптация под каждый возраст.',
   },
 ]
 
@@ -143,37 +145,46 @@ const testimonials = [
 
 const faqItems = [
   {
-    question: 'Как проходит день в лагере «Территория МЫ»?',
+    id: 'faq-1',
+    question: 'Как проходит день в лагере?',
     answer:
-      'Один из главных принципов лагеря — насыщенность и разнообразие. Каждая смена уникальна по содержанию. Типичный день включает: утренние сборы и зарядку, профильные занятия по выбранному направлению (английский язык, психология, бизнес, театр и др.), квесты и командные игры, творческие мастерские, спортивные активности, вечерние мероприятия (дискотеки, костры, театральные постановки, шоу талантов). Распорядок дня адаптирован для каждой возрастной группы.',
+      'Один из главных принципов лагеря — насыщенность и разнообразие. Каждая смена уникальна. Типичный день включает: утренние сборы, профильные занятия по выбранному направлению (английский, психология, бизнес, театр), квесты и командные игры, творческие мастерские, спорт, вечерние мероприятия (дискотеки, костры, театральные постановки, шоу талантов). Распорядок адаптирован для каждой возрастной группы.',
   },
   {
+    id: 'faq-2',
     question: 'Какие условия проживания?',
     answer:
-      'Лагерь проходит на базе ГК «Регина» в городе Мамадыш. Комфортабельное размещение в 3-4-местных номерах с туалетом и душем в каждом номере. Качественное улучшенное пятиразовое питание. На территории работают медицинский кабинет, организован пост охраны и круглосуточная дежурная вахта. Территория окружена живописной природой.',
+      'ГК «Регина», г. Мамадыш. Комфортабельное размещение в 3-4-местных номерах с туалетом и душем в каждом номере. Качественное улучшенное пятиразовое питание. Медицинский кабинет, пост охраны, круглосуточная дежурная вахта. Живописная природа.',
   },
   {
+    id: 'faq-3',
     question: 'Какого возраста дети принимаются?',
     answer:
-      'Лагерь принимает детей и подростков с 1 по 11 класс. Участники распределяются по четырём возрастным программам: супердетская (1-3 классы), детская (4-5 классы), подростковая (6-7 классы) и молодёжная (8-11 классы). Каждая программа адаптирована под возрастные особенности, интересы и потребности участников.',
+      'С 1 по 11 класс. Четыре возрастные программы: супердетская (1-3 кл.), детская (4-5 кл.), подростковая (6-7 кл.), молодёжная (8-11 кл.). Каждая программа адаптирована под возрастные особенности.',
   },
   {
-    question: 'Как оформить путёвку?',
+    id: 'faq-4',
+    question: 'Что такое собеседование и зачем оно нужно?',
     answer:
-      'Собеседования (оформление необходимых документов и путёвок) проводятся каждый вторник с 18:30 до 20:00. Адрес офиса: г. Казань, ул. Спартаковская, 2 (ТОК «Караван»), оф. 224. Вы можете забронировать путёвку по телефону: +7(927)039-4222 (Владислав Лазбинев) или +7(927)04-777-40 (Елена Борисовна Юсупова, директор лагеря).',
+      'Собеседование — это уникальная форма приобретения путёвки в наш лагерь. Это не просто оформление документов, а начало отдыха. С теми, кто впервые едет в лагерь, мы проводим короткую беседу-интервью, чтобы подобрать идеальный отряд и вожатых, которые раскроют потенциал ребёнка. На собеседовании вы узнаете подробную информацию о смене, заполните документы и сможете оплатить путёвку.',
+  },
+  {
+    id: 'faq-5',
+    question: 'Можно ли сэкономить при раннем бронировании?',
+    answer:
+      'Да! Покупая путёвку заранее, можно сэкономить до 10%. Также доступна оплата по частям — мы делим стоимость путёвки пополам. Обращайтесь по телефонам или приходите на собеседование, чтобы узнать актуальные условия.',
   },
 ]
 
 const navLinks = [
   { label: 'О лагере', href: '#about' },
   { label: 'Смены 2026', href: '#shifts' },
-  { label: 'Преимущества', href: '#advantages' },
-  { label: 'Отзывы', href: '#testimonials' },
+  { label: 'Собеседование', href: '#interview' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Контакты', href: '#contacts' },
 ]
 
-/* ───────────── components ───────────── */
+/* ───────────── компоненты ───────────── */
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -181,37 +192,43 @@ function StarRating({ count }: { count: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
-          className={`h-4 w-4 ${i < count ? 'fill-amber-400 text-amber-400' : 'text-muted-foreground/30'}`}
+          className={`h-4 w-4 ${i < count ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
         />
       ))}
     </div>
   )
 }
 
-function FAQItem({ question, answer }: { question: string; answer: string }) {
+function FAQItem({ id, question, answer }: { id: string; question: string; answer: string }) {
   const [open, setOpen] = useState(false)
+
   return (
-    <button
-      onClick={() => setOpen(!open)}
-      className="w-full text-left rounded-xl border border-border bg-card p-5 transition-all hover:shadow-md"
-    >
-      <div className="flex items-center justify-between gap-4">
-        <span className="font-semibold text-base text-card-foreground">{question}</span>
-        {open ? (
-          <ChevronUp className="h-5 w-5 shrink-0 text-primary" />
-        ) : (
-          <ChevronDown className="h-5 w-5 shrink-0 text-primary" />
-        )}
-      </div>
-      {open && <p className="mt-3 text-muted-foreground leading-relaxed">{answer}</p>}
-    </button>
+    <div id={id} className="rounded-lg border border-gray-200 bg-white">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-gray-50 rounded-lg transition-colors"
+        aria-expanded={open}
+      >
+        <span className="font-medium text-gray-900">{question}</span>
+        <span className="shrink-0 text-gray-400">
+          {open ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+        </span>
+      </button>
+      {open && (
+        <div className="px-5 pb-5 -mt-1">
+          <p className="text-gray-600 leading-relaxed">{answer}</p>
+        </div>
+      )}
+    </div>
   )
 }
 
-/* ───────────── page ───────────── */
+/* ───────────── страница ───────────── */
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const scrollTo = (href: string) => {
     setMobileMenuOpen(false)
@@ -219,54 +236,72 @@ export default function Home() {
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
-  return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">
-      {/* ─── Header ─── */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:px-8">
-          <a href="#" className="flex items-center gap-2.5">
-            <img src="/tm-logo.png" alt="Территория МЫ" className="h-9 w-9 rounded-full object-cover" />
-            <div className="hidden sm:block">
-              <span className="text-lg font-bold text-primary leading-none">Территория МЫ</span>
-              <span className="block text-[10px] text-muted-foreground leading-none mt-0.5">
-                РИПЛ, 1-е место в РТ
-              </span>
-            </div>
-          </a>
+  const openBookingForm = () => {
+    window.open(GOOGLE_FORM_URL, '_blank', 'noopener')
+  }
 
-          <nav className="hidden lg:flex items-center gap-5">
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+      {/* ─── Header ─── */}
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+          <button onClick={() => scrollTo('#about')} className="flex items-center gap-2.5">
+            {/* Текстовый логотип вместо картинки */}
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-700 flex items-center justify-center">
+              <span className="text-white font-bold text-sm leading-none">ТМ</span>
+            </div>
+            <div className="hidden sm:block">
+              <span className="text-base font-bold text-gray-900 leading-none">Территория МЫ</span>
+              <span className="block text-[10px] text-gray-500 leading-none mt-0.5">РИПЛ</span>
+            </div>
+          </button>
+
+          <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          <Button onClick={() => scrollTo('#contacts')} className="hidden lg:inline-flex">
-            Забронировать путёвку
-          </Button>
-
-          <button className="lg:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={openBookingForm}
+              size="sm"
+              className="hidden md:inline-flex bg-violet-600 hover:bg-violet-700 text-white"
+            >
+              Забронировать путёвку
+            </Button>
+            <button
+              className="md:hidden p-2 -mr-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Меню"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
         {mobileMenuOpen && (
-          <nav className="lg:hidden border-t border-border bg-background px-4 py-4 flex flex-col gap-3">
+          <nav className="md:hidden border-t border-gray-100 bg-white px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors text-left"
+                className="text-sm text-gray-600 hover:text-gray-900 py-2 text-left"
               >
                 {link.label}
               </button>
             ))}
-            <Button onClick={() => scrollTo('#contacts')} className="mt-2">
+            <Button
+              onClick={() => { setMobileMenuOpen(false); openBookingForm() }}
+              size="sm"
+              className="mt-2 bg-violet-600 hover:bg-violet-700 text-white"
+            >
               Забронировать путёвку
             </Button>
           </nav>
@@ -275,116 +310,107 @@ export default function Home() {
 
       <main className="flex-1">
         {/* ─── Hero ─── */}
-        <section id="about" className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-16 md:pt-20 md:pb-24 grid lg:grid-cols-2 gap-10 items-center relative">
-            <div className="space-y-6">
-              <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-sm px-4 py-1.5 rounded-full">
-                <Trophy className="h-4 w-4 mr-1.5 text-amber-600" />
+        <section id="about" className="bg-white">
+          <div className="max-w-6xl mx-auto px-4 py-16 md:py-24">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-medium px-3 py-1 rounded-full mb-6">
+                <Trophy className="h-3.5 w-3.5" />
                 1-е место в рейтинге лагерей Республики Татарстан
-              </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                Республиканский лагерь{' '}
-                <span className="text-primary">«Территория МЫ»</span>
+              </div>
+
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+                Республиканский лагерь
+                <br />
+                <span className="text-violet-700">«Территория МЫ»</span>
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Интеллектуально-психологический лагерь с 27-летней историей. Эксклюзивные авторские программы,
-                квесты, ролевые игры, профориентация и атмосфера доверия, в которой становятся личностью.
+
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                Интеллектуально-психологический лагерь с 27-летней историей. Авторские программы, квесты,
+                ролевые игры, профориентация и атмосфера доверия, в которой становятся личностью.
               </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Button size="lg" className="text-base px-8" onClick={() => scrollTo('#shifts')}>
-                  Смены лета 2026
+
+              <div className="flex flex-wrap gap-3 mb-8">
+                <Button
+                  size="lg"
+                  onClick={openBookingForm}
+                  className="bg-violet-600 hover:bg-violet-700 text-white"
+                >
+                  Забронировать путёвку
+                  <ExternalLink className="h-4 w-4 ml-1.5" />
                 </Button>
-                <Button size="lg" variant="outline" className="text-base px-8" onClick={() => scrollTo('#contacts')}>
-                  Записаться
+                <Button size="lg" variant="outline" onClick={() => scrollTo('#interview')}>
+                  Записаться на собеседование
                 </Button>
               </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 pt-4 text-sm text-muted-foreground">
+
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-500">
                 <span className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-primary" /> 27 лет вместе
+                  <Calendar className="h-4 w-4" /> 27 лет вместе
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Users className="h-4 w-4 text-primary" /> 4 смены летом
+                  <Users className="h-4 w-4" /> 4 смены летом
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <GraduationCap className="h-4 w-4 text-primary" /> С 1 по 11 класс
+                  <GraduationCap className="h-4 w-4" /> С 1 по 11 класс
                 </span>
-              </div>
-            </div>
-            <div className="relative">
-              <img
-                src="/tm-hero.png"
-                alt="Лагерь Территория МЫ"
-                className="rounded-2xl shadow-2xl w-full object-cover"
-              />
-              <div className="absolute -bottom-3 -left-3 bg-primary text-primary-foreground rounded-xl px-4 py-3 shadow-lg text-sm font-medium hidden md:flex items-center gap-2">
-                <Sparkles className="h-5 w-5" />
-                <span>Лето 2026 — наборы открыты!</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ─── Shifts ─── */}
-        <section id="shifts" className="py-20 md:py-28">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="text-center mb-14">
-              <Badge variant="secondary" className="mb-3">Лето 2026</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Летние смены</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                Четыре уникальные смены с эксклюзивными авторскими программами. Выбери то, что по душе!
+        {/* ─── Смены ─── */}
+        <section id="shifts" className="bg-gray-50 py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Летние смены 2026</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">
+                Четыре уникальные смены с авторскими программами
               </p>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-5">
               {shifts.map((shift) => (
                 <Card
                   key={shift.num}
-                  className={`overflow-hidden group hover:shadow-xl transition-shadow duration-300 ${
-                    shift.popular ? 'border-primary border-2 ring-1 ring-primary/20' : 'border-border'
+                  className={`overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow ${
+                    shift.popular ? 'ring-2 ring-violet-500' : ''
                   }`}
                 >
-                  <div className="grid md:grid-cols-5">
-                    <div className="md:col-span-2 relative h-56 md:h-auto overflow-hidden">
-                      <img
-                        src={shift.image}
-                        alt={shift.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent md:bg-gradient-to-r md:from-transparent md:to-black/10" />
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-primary text-primary-foreground text-xs font-bold">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Заглушка вместо фото */}
+                    <div
+                      className={`md:w-56 shrink-0 bg-gradient-to-br ${shift.color} flex items-center justify-center p-8 min-h-[160px]`}
+                    >
+                      {shift.icon}
+                    </div>
+
+                    <div className="flex-1 p-5 md:p-6">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                           Смена {shift.num}
-                        </Badge>
-                      </div>
-                      {shift.popular && (
-                        <div className="absolute top-3 right-3">
-                          <Badge className="bg-amber-500 text-white text-xs font-bold">
+                        </span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-400">{shift.type}</span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-400">{shift.dates}</span>
+                        {shift.popular && (
+                          <Badge className="bg-amber-100 text-amber-700 border-amber-200 text-[10px]">
                             Хит сезона
                           </Badge>
-                        </div>
-                      )}
-                    </div>
-                    <div className="md:col-span-3 p-6 flex flex-col">
-                      <div className="flex items-start justify-between gap-3 mb-1">
-                        <div className="flex items-center gap-2 text-primary">
-                          {shift.icon}
-                          <span className="text-xs font-semibold uppercase tracking-wide">{shift.type}</span>
-                        </div>
-                        <span className="text-xs text-muted-foreground whitespace-nowrap">{shift.dates}</span>
+                        )}
                       </div>
-                      <h3 className="text-xl font-bold mt-2 mb-3">{shift.name}</h3>
-                      <p className="text-muted-foreground leading-relaxed text-sm flex-1">{shift.description}</p>
+                      <h3 className="text-lg font-bold mb-2">{shift.name}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-3">{shift.description}</p>
                       {shift.priceNote && (
-                        <p className="text-xs text-muted-foreground mt-2 italic">{shift.priceNote}</p>
+                        <p className="text-xs text-gray-400 italic mb-3">{shift.priceNote}</p>
                       )}
-                      <div className="mt-4 flex items-center justify-between">
-                        <div>
-                          <span className="text-2xl font-extrabold text-foreground">{shift.price}</span>
-                          <span className="text-muted-foreground ml-1">руб.</span>
-                        </div>
-                        <Button size="sm" onClick={() => scrollTo('#contacts')}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl font-bold">
+                          {shift.price} <span className="text-sm font-normal text-gray-400">руб.</span>
+                        </span>
+                        <Button size="sm" variant="outline" onClick={openBookingForm}>
                           Забронировать
+                          <ExternalLink className="h-3.5 w-3.5 ml-1" />
                         </Button>
                       </div>
                     </div>
@@ -395,232 +421,347 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── Advantages ─── */}
-        <section id="advantages" className="py-20 md:py-28 bg-secondary/30">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="text-center mb-14">
-              <Badge variant="secondary" className="mb-3">Почему мы</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Наши преимущества</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                Лагерь, где становятся личностью. Однажды побывав, школьники из года в год возвращаются снова и снова
+        {/* ─── Преимущества ─── */}
+        <section id="advantages" className="bg-white py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Почему «Территория МЫ»</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">
+                Однажды побывав, школьники из года в год возвращаются снова и снова
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {advantages.map((adv) => (
-                <Card key={adv.title} className="hover:shadow-lg transition-shadow duration-300 border-border p-6">
-                  <div className="bg-primary/10 text-primary rounded-xl p-3 w-fit mb-4">{adv.icon}</div>
-                  <h3 className="text-base font-bold mb-2">{adv.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{adv.description}</p>
-                </Card>
+                <div key={adv.title} className="p-5 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
+                  <div className="text-violet-600 mb-3">{adv.icon}</div>
+                  <h3 className="font-semibold mb-1.5">{adv.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{adv.description}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── Testimonials ─── */}
-        <section id="testimonials" className="py-20 md:py-28">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="text-center mb-14">
-              <Badge variant="secondary" className="mb-3">Отзывы</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Что говорят участники и родители</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-                Нам доверяют тысячи семей Татарстана и за его пределами
+        {/* ─── Отзывы ─── */}
+        <section className="bg-gray-50 py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Отзывы</h2>
+              <p className="text-gray-500">Что говорят участники и их родители</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-5">
+              {testimonials.map((t) => (
+                <div
+                  key={t.name}
+                  className="bg-white rounded-xl border border-gray-100 p-5"
+                >
+                  <StarRating count={t.rating} />
+                  <p className="mt-3 text-sm text-gray-600 leading-relaxed italic">
+                    &laquo;{t.text}&raquo;
+                  </p>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <p className="text-sm font-medium">{t.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Собеседование ─── */}
+        <section id="interview" className="bg-white py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Собеседование</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">
+                Это не просто покупка путёвки — это начало незабываемого отдыха
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((t) => (
-                <Card key={t.name} className="p-6 hover:shadow-lg transition-shadow duration-300 border-border">
-                  <StarRating count={t.rating} />
-                  <p className="mt-4 text-muted-foreground leading-relaxed italic">
-                    &laquo;{t.text}&raquo;
-                  </p>
-                  <div className="mt-5 flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                      {t.name[0]}
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-violet-50 border border-violet-100 rounded-2xl p-6 md:p-8 mb-8">
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  Мы заботимся о том, чтобы каждый ребёнок чувствовал себя комфортно. И уверены, что
+                  комфорт во время смены начинается уже в городе. Вот почему мы проводим собеседование.
+                </p>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  С теми, кто впервые отправляется в лагерь, мы проводим короткую беседу-интервью. Это
+                  помогает нам подобрать идеальный отряд и вожатых, которые раскроют потенциал каждого
+                  ребёнка и подарят ему максимум радости.
+                </p>
+
+                <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-violet-100 flex items-center justify-center shrink-0">
+                      <UserCheck className="h-4 w-4 text-violet-600" />
                     </div>
-                    <p className="font-semibold text-sm">{t.name}</p>
+                    <div>
+                      <p className="text-sm font-semibold">Знакомство</p>
+                      <p className="text-xs text-gray-500">Беседа с ребёнком и родителями</p>
+                    </div>
                   </div>
-                </Card>
-              ))}
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-violet-100 flex items-center justify-center shrink-0">
+                      <FileText className="h-4 w-4 text-violet-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">Документы</p>
+                      <p className="text-xs text-gray-500">Заполнение и подписание</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-violet-100 flex items-center justify-center shrink-0">
+                      <CreditCard className="h-4 w-4 text-violet-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">Оплата</p>
+                      <p className="text-xs text-gray-500">Оформление путёвки</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl p-4 border border-violet-100">
+                  <p className="text-sm font-semibold mb-2">Что взять с собой на собеседование:</p>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li className="flex items-start gap-2">
+                      <span className="text-violet-400 mt-1">—</span>
+                      Свидетельство о рождении / паспорт участника
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-violet-400 mt-1">—</span>
+                      СНИЛС ребёнка
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-violet-400 mt-1">—</span>
+                      Паспорт одного из родителей
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-violet-400 mt-1">—</span>
+                      Дипломы и грамоты за последние 5 лет (2-3 шт., можно копии)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Расписание */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between p-5 rounded-xl border border-gray-200 bg-gray-50 mb-8">
+                <div>
+                  <p className="font-semibold">Когда:</p>
+                  <p className="text-sm text-gray-500">Каждый вторник с 18:30 до 20:00</p>
+                </div>
+                <div>
+                  <p className="font-semibold">Где:</p>
+                  <p className="text-sm text-gray-500">
+                    Казань, ул. Спартаковская, 2 (ТОК «Караван»), 2 этаж, оф. 224-225
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* ─── FAQ ─── */}
-        <section id="faq" className="py-20 md:py-28 bg-secondary/30">
-          <div className="max-w-3xl mx-auto px-4 md:px-8">
-            <div className="text-center mb-14">
-              <Badge variant="secondary" className="mb-3">Вопросы и ответы</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Частые вопросы</h2>
+        <section id="faq" className="bg-gray-50 py-16 md:py-24">
+          <div className="max-w-3xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Частые вопросы</h2>
             </div>
 
             <div className="space-y-3">
               {faqItems.map((item) => (
-                <FAQItem key={item.question} question={item.question} answer={item.answer} />
+                <FAQItem key={item.id} id={item.id} question={item.question} answer={item.answer} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── Contacts / CTA ─── */}
-        <section id="contacts" className="py-20 md:py-28 bg-primary text-primary-foreground">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 grid lg:grid-cols-2 gap-12 items-start">
-            <div className="space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold">Запишитесь на лето 2026!</h2>
-              <p className="text-primary-foreground/80 text-lg leading-relaxed">
-                Оставьте заявку или позвоните нам напрямую. Мы расскажем обо всех деталях, поможем выбрать подходящую
-                смену и ответим на все вопросы.
+        {/* ─── Контакты / Заявка ─── */}
+        <section id="contacts" className="bg-white py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">Записаться на собеседование</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">
+                Оставьте заявку — мы перезвоним и поможем записаться на удобный вторник
               </p>
+            </div>
 
-              <div className="space-y-4 pt-2">
-                <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 shrink-0" />
-                  <div>
-                    <p className="text-lg font-medium">+7 (927) 039-42-22</p>
-                    <p className="text-sm text-primary-foreground/70">Владислав Лазбинев, зам. руководителя</p>
+            <div className="grid lg:grid-cols-5 gap-8 max-w-4xl mx-auto">
+              {/* Контакты */}
+              <div className="lg:col-span-2 space-y-5">
+                <div>
+                  <p className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Телефоны</p>
+                  <div className="space-y-2">
+                    <a href="tel:+79270394222" className="flex items-center gap-2 text-sm text-gray-700 hover:text-violet-700">
+                      <Phone className="h-4 w-4 text-gray-400" />
+                      +7 (927) 039-42-22
+                    </a>
+                    <p className="text-xs text-gray-400 pl-6">Владислав Лазбинев, зам. руководителя</p>
+                    <a href="tel:+79270477740" className="flex items-center gap-2 text-sm text-gray-700 hover:text-violet-700 mt-2">
+                      <Phone className="h-4 w-4 text-gray-400" />
+                      +7 (927) 04-777-40
+                    </a>
+                    <p className="text-xs text-gray-400 pl-6">Елена Борисовна Юсупова, директор</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 shrink-0" />
-                  <div>
-                    <p className="text-lg font-medium">+7 (927) 04-777-40</p>
-                    <p className="text-sm text-primary-foreground/70">Елена Борисовна Юсупова, директор</p>
+
+                <div>
+                  <p className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Адрес</p>
+                  <div className="flex items-start gap-2 text-sm text-gray-700">
+                    <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                    <span>Казань, ул. Спартаковская, 2<br />ТОК «Караван», оф. 224-225</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 shrink-0" />
-                  <div>
-                    <p className="text-lg font-medium">Казань, ул. Спартаковская, 2</p>
-                    <p className="text-sm text-primary-foreground/70">ТОК &laquo;Караван&raquo;, оф. 224</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-5 w-5 shrink-0" />
-                  <div>
-                    <p className="text-lg font-medium">ГК &laquo;Регина&raquo;, г. Мамадыш</p>
-                    <p className="text-sm text-primary-foreground/70">Место проведения лагеря</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Clock className="h-5 w-5 shrink-0" />
-                  <div>
-                    <p className="text-lg font-medium">Каждый вторник, 18:30 — 20:00</p>
-                    <p className="text-sm text-primary-foreground/70">Собеседования и оформление путёвок</p>
+
+                <div>
+                  <p className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Время</p>
+                  <div className="flex items-start gap-2 text-sm text-gray-700">
+                    <Clock className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                    <span>Каждый вторник<br />18:30 — 20:00</span>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <Card className="bg-white text-foreground p-6 md:p-8 shadow-2xl">
-              <CardHeader className="p-0 mb-6">
-                <CardTitle className="text-2xl">Оставить заявку</CardTitle>
-              </CardHeader>
-              <form
-                className="space-y-4"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  alert(
-                    'Спасибо за заявку! Мы свяжемся с вами в ближайшее время. Также вы можете позвонить напрямую: +7(927)039-4222'
-                  )
-                }}
-              >
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">Ваше имя</label>
-                    <Input id="name" placeholder="Иван Иванов" required />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="phone" className="text-sm font-medium">Телефон</label>
-                    <Input id="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
-                  </div>
+              {/* Форма заявки на собеседование */}
+              <div className="lg:col-span-3">
+                <div className="rounded-xl border border-gray-200 p-6">
+                  {formSubmitted ? (
+                    <div className="text-center py-8">
+                      <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                        <UserCheck className="h-6 w-6 text-green-600" />
+                      </div>
+                      <h3 className="font-bold text-lg mb-2">Заявка отправлена!</h3>
+                      <p className="text-sm text-gray-500 mb-4">
+                        Мы перезвоним вам в ближайшее время для подтверждения даты собеседования.
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        Также вы можете позвонить напрямую:{' '}
+                        <a href="tel:+79270394222" className="text-violet-700">+7 (927) 039-42-22</a>
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="font-bold text-lg mb-4">Заявка на собеседование</h3>
+                      <form
+                        className="space-y-4"
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          setFormSubmitted(true)
+                        }}
+                      >
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div>
+                            <label htmlFor="parentName" className="block text-sm font-medium text-gray-700 mb-1">
+                              Ваше имя *
+                            </label>
+                            <Input id="parentName" placeholder="Иван Иванов" required />
+                          </div>
+                          <div>
+                            <label htmlFor="parentPhone" className="block text-sm font-medium text-gray-700 mb-1">
+                              Телефон *
+                            </label>
+                            <Input id="parentPhone" type="tel" placeholder="+7 (___) ___-__-__" required />
+                          </div>
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div>
+                            <label htmlFor="childName" className="block text-sm font-medium text-gray-700 mb-1">
+                              Имя ребёнка *
+                            </label>
+                            <Input id="childName" placeholder="Алиса" required />
+                          </div>
+                          <div>
+                            <label htmlFor="childClass" className="block text-sm font-medium text-gray-700 mb-1">
+                              Класс *
+                            </label>
+                            <select
+                              id="childClass"
+                              required
+                              className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                            >
+                              <option value="">Выберите</option>
+                              {[1,2,3,4,5,6,7,8,9,10,11].map(c => (
+                                <option key={c} value={c}>{c} класс</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label htmlFor="childShift" className="block text-sm font-medium text-gray-700 mb-1">
+                            Интересующая смена
+                          </label>
+                          <select
+                            id="childShift"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                          >
+                            <option value="">Выберите смену</option>
+                            <option value="1">Смена 1: КвесТТеРРа (20 июня — 7 июля)</option>
+                            <option value="2">Смена 2: Эти Тонкие МирЫ (9 — 26 июля)</option>
+                            <option value="3">Смена 3: ПрофТерра (28 июля — 14 августа)</option>
+                            <option value="4">Смена 4: ТМ-фест (16 — 22 августа)</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
+                            Комментарий
+                          </label>
+                          <Textarea
+                            id="comment"
+                            placeholder="Вопросы или пожелания..."
+                            rows={2}
+                          />
+                        </div>
+                        <Button
+                          type="submit"
+                          className="w-full bg-violet-600 hover:bg-violet-700 text-white"
+                        >
+                          Отправить заявку на собеседование
+                        </Button>
+                        <p className="text-xs text-gray-400 text-center">
+                          После отправки мы перезвоним для подтверждения даты собеседования
+                        </p>
+                      </form>
+                    </>
+                  )}
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="childName" className="text-sm font-medium">Имя и класс ребёнка</label>
-                  <Input id="childName" placeholder="Например: Алиса, 5 класс" />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="shift" className="text-sm font-medium">Интересующая смена</label>
-                  <select
-                    id="shift"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <option value="">Выберите смену</option>
-                    <option value="1">Смена 1: КвесТТеРРа (20 июня — 7 июля)</option>
-                    <option value="2">Смена 2: Эти Тонкие МирЫ (9 — 26 июля)</option>
-                    <option value="3">Смена 3: ПрофТерра (28 июля — 14 августа)</option>
-                    <option value="4">Смена 4: ТМ-фест (16 — 22 августа)</option>
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">Комментарий</label>
-                  <Textarea id="message" placeholder="Вопросы или пожелания..." rows={3} />
-                </div>
-                <Button type="submit" className="w-full text-base py-5">
-                  Отправить заявку
-                </Button>
-              </form>
-            </Card>
+              </div>
+            </div>
           </div>
         </section>
       </main>
 
       {/* ─── Footer ─── */}
-      <footer className="border-t border-border bg-background">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <img src="/tm-logo.png" alt="Территория МЫ" className="h-8 w-8 rounded-full object-cover" />
-                <div>
-                  <span className="font-bold text-lg text-primary">Территория МЫ</span>
-                  <span className="block text-xs text-muted-foreground">Республиканский ИПЛ</span>
-                </div>
+      <footer className="border-t border-gray-200 bg-white">
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-violet-600 to-indigo-700 flex items-center justify-center">
+                <span className="text-white font-bold text-[10px] leading-none">ТМ</span>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Республиканский интеллектуально-психологический лагерь. 27 лет опыта, 1-е место в рейтинге лагерей
-                Республики Татарстан. Место, где становятся личностью.
-              </p>
+              <span className="text-sm font-bold text-gray-700">Территория МЫ</span>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="font-semibold">Навигация</h4>
-              <div className="grid grid-cols-2 gap-2">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.href}
-                    onClick={() => scrollTo(link.href)}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors text-left"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-semibold">Контакты</h4>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" /> +7 (927) 039-42-22
-                </p>
-                <p className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" /> +7 (927) 04-777-40
-                </p>
-                <p className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> Казань, ул. Спартаковская, 2
-                </p>
-                <p className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" /> vk.com/territorymy
-                </p>
-              </div>
+            <div className="flex items-center gap-4 text-sm text-gray-500">
+              <a href="tel:+79270394222" className="hover:text-gray-700">
+                +7 (927) 039-42-22
+              </a>
+              <span className="text-gray-300">|</span>
+              <span>Казань, ул. Спартаковская, 2</span>
+              <span className="text-gray-300">|</span>
+              <a
+                href="https://vk.com/territorymy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gray-700"
+              >
+                ВКонтакте
+              </a>
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-border text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} Республиканский интеллектуально-психологический лагерь &laquo;Территория МЫ&raquo;</p>
-            <p className="mt-1">ГК &laquo;Регина&raquo;, г. Мамадыш, Республика Татарстан</p>
+          <div className="mt-6 pt-4 border-t border-gray-100 text-center text-xs text-gray-400">
+            <p>ГК «Регина», г. Мамадыш, Республика Татарстан</p>
           </div>
         </div>
       </footer>
