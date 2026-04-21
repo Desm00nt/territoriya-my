@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import Image from 'next/image'
 import {
   Trophy,
   Calendar,
@@ -297,8 +296,8 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
           <button onClick={() => scrollTo('#about')} className="flex items-center gap-3 group">
-            <Image
-              src="/logo.png"
+            <img
+              src="/territoriya-my/logo.png"
               alt="Территория МЫ"
               width={40}
               height={40}
@@ -367,12 +366,10 @@ export default function Home() {
         <section id="about" className="relative overflow-hidden bg-black">
           {/* Фоновое фото */}
           <div className="absolute inset-0">
-            <Image
-              src="/hero.jpg"
+            <img
+              src="/territoriya-my/hero.jpg"
               alt="Дети в лагере Территория МЫ"
-              fill
-              className="object-cover object-center"
-              priority
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
@@ -452,11 +449,10 @@ export default function Home() {
                   <div className="flex flex-col md:flex-row">
                     {/* Фото смены */}
                     <div className="relative md:w-80 lg:w-96 shrink-0 h-56 md:h-auto overflow-hidden">
-                      <Image
-                        src={shift.image}
+                      <img
+                        src={`/territoriya-my${shift.image}`}
                         alt={shift.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
                         Смена {shift.num}
@@ -551,11 +547,10 @@ export default function Home() {
                   <div className={`${i === 0 ? 'h-64 md:h-full' : 'h-48'} relative`}>
                     {/* Фото или градиентная заглушка */}
                     {item.photo ? (
-                      <Image
-                        src={item.photo}
+                      <img
+                        src={`/territoriya-my${item.photo}`}
                         alt={item.label}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
                       <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} flex items-center justify-center`}>
@@ -891,8 +886,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-5 py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
+              <img
+                src="/territoriya-my/logo.png"
                 alt="Территория МЫ"
                 width={36}
                 height={36}
