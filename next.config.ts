@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
-  /* config options here */
+  output: "export",
+  basePath: "/territoriya-my",
+  images: {
+    unoptimized: true,
+  },
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
