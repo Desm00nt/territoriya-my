@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import Image from 'next/image'
 import {
   Trophy,
   Calendar,
@@ -14,14 +15,8 @@ import {
   Phone,
   Clock,
   ChevronDown,
-  ChevronUp,
   Menu,
   X,
-  Gamepad2,
-  Brain,
-  Briefcase,
-  Dice5,
-  GraduationCap,
   FileText,
   UserCheck,
   CreditCard,
@@ -35,7 +30,7 @@ import {
 
 /* ───────────── данные из VK ───────────── */
 
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf_example/formResponse' // заменить на реальную
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf_example/formResponse'
 
 const shifts = [
   {
@@ -46,9 +41,7 @@ const shifts = [
     price: '69 800',
     description:
       'Удивительное погружение в захватывающие сюжеты мировых шедевров XVIII века! Иммерсивное путешествие с квестами, сюжетно-ролевыми играми, мистериями, приключениями и испытаниями.',
-    gradient: 'from-amber-400 via-orange-400 to-rose-400',
-    icon: <Gamepad2 className="h-12 w-12 text-white" />,
-    popular: false,
+    image: '/shift-1.jpg',
   },
   {
     num: 2,
@@ -58,9 +51,7 @@ const shifts = [
     price: '74 500',
     description:
       'Этика и психология отношений. Только в мужском кругу мальчик обретает уверенность и ответственность. Только в женском кругу девочка учится создавать уют, заботиться и понимать.',
-    gradient: 'from-pink-400 via-rose-400 to-purple-400',
-    icon: <Brain className="h-12 w-12 text-white" />,
-    popular: true,
+    image: '/shift-2.jpg',
   },
   {
     num: 3,
@@ -71,9 +62,7 @@ const shifts = [
     priceNote: 'English Camp Family — 76 300 ₽',
     description:
       'Путь к самореализации и успешному будущему! English Camp Family, Бизнес-школа, Международные отношения, Театральное искусство, Игротехнологии, КВН и стендап, Психология общения.',
-    gradient: 'from-cyan-400 via-sky-400 to-blue-500',
-    icon: <Briefcase className="h-12 w-12 text-white" />,
-    popular: false,
+    image: '/shift-3.jpg',
   },
   {
     num: 4,
@@ -83,9 +72,7 @@ const shifts = [
     price: '32 200',
     description:
       'Большой фестиваль игр всех форматов: спортивные, настольные, командные, стратегические, ролевые, игровые чемпионаты! Игра поможет развить коммуникации и лидерские качества.',
-    gradient: 'from-violet-400 via-purple-400 to-fuchsia-500',
-    icon: <Dice5 className="h-12 w-12 text-white" />,
-    popular: false,
+    image: '/shift-4.jpg',
   },
 ]
 
@@ -177,12 +164,12 @@ const faqItems = [
 ]
 
 const galleryItems = [
-  { label: 'Квесты и приключения', gradient: 'from-emerald-400 to-teal-600', icon: <Sparkles className="h-8 w-8 text-white/80" /> },
-  { label: 'Спорт и командные игры', gradient: 'from-sky-400 to-blue-600', icon: <Trophy className="h-8 w-8 text-white/80" /> },
-  { label: 'Вечерние мероприятия', gradient: 'from-orange-400 to-red-500', icon: <Star className="h-8 w-8 text-white/80" /> },
-  { label: 'Творческие мастерские', gradient: 'from-pink-400 to-rose-600', icon: <Heart className="h-8 w-8 text-white/80" /> },
-  { label: 'Природа и прогулки', gradient: 'from-green-400 to-emerald-600', icon: <TreePine className="h-8 w-8 text-white/80" /> },
-  { label: 'Дружба и общение', gradient: 'from-violet-400 to-purple-600', icon: <Users className="h-8 w-8 text-white/80" /> },
+  { label: 'Квесты и приключения', gradient: 'from-gray-700 to-gray-900', icon: <Sparkles className="h-8 w-8 text-white/60" /> },
+  { label: 'Спорт и командные игры', gradient: 'from-gray-800 to-black', icon: <Trophy className="h-8 w-8 text-white/60" /> },
+  { label: 'Вечерние мероприятия', gradient: 'from-gray-600 to-gray-800', icon: <Star className="h-8 w-8 text-white/60" /> },
+  { label: 'Творческие мастерские', gradient: 'from-gray-700 to-gray-900', icon: <Heart className="h-8 w-8 text-white/60" /> },
+  { label: 'Природа и прогулки', gradient: 'from-gray-800 to-black', icon: <TreePine className="h-8 w-8 text-white/60" /> },
+  { label: 'Дружба и общение', gradient: 'from-gray-600 to-gray-800', icon: <Users className="h-8 w-8 text-white/60" /> },
 ]
 
 const navLinks = [
@@ -201,7 +188,7 @@ function StarRating({ count }: { count: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
-          className={`h-4 w-4 ${i < count ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`}
+          className={`h-4 w-4 ${i < count ? 'fill-blue-500 text-blue-500' : 'text-gray-300'}`}
         />
       ))}
     </div>
@@ -239,6 +226,15 @@ function FAQItem({ id, question, answer }: { id: string; question: string; answe
   )
 }
 
+function GraduationCap(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12v5c3 3 9 3 12 0v-5" />
+    </svg>
+  )
+}
+
 /* ───────────── страница ───────────── */
 
 export default function Home() {
@@ -258,15 +254,19 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900">
       {/* ─── Header ─── */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3.5">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
           <button onClick={() => scrollTo('#about')} className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-              <span className="text-white font-extrabold text-sm leading-none tracking-tight">ТМ</span>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Территория МЫ"
+              width={40}
+              height={40}
+              className="rounded-lg"
+            />
             <div className="hidden sm:block">
               <span className="text-[15px] font-bold text-gray-900 leading-none">Территория МЫ</span>
-              <span className="block text-[10px] text-gray-400 leading-none mt-0.5 tracking-wide">РИПЛ · с 1999</span>
+              <span className="block text-[10px] text-gray-400 leading-none mt-0.5 tracking-wide">РИПЛ</span>
             </div>
           </button>
 
@@ -286,7 +286,7 @@ export default function Home() {
             <Button
               onClick={openBookingForm}
               size="sm"
-              className="hidden md:inline-flex bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm"
+              className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
             >
               Забронировать путёвку
             </Button>
@@ -314,7 +314,7 @@ export default function Home() {
             <Button
               onClick={() => { setMobileMenuOpen(false); openBookingForm() }}
               size="sm"
-              className="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="mt-3 bg-blue-600 hover:bg-blue-700 text-white"
             >
               Забронировать путёвку
             </Button>
@@ -324,26 +324,34 @@ export default function Home() {
 
       <main className="flex-1">
         {/* ─── Hero ─── */}
-        <section id="about" className="relative overflow-hidden">
-          {/* Фоновый градиент-заглушка вместо фото */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700" />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+        <section id="about" className="relative overflow-hidden bg-black">
+          {/* Фоновое фото */}
+          <div className="absolute inset-0">
+            <Image
+              src="/hero.jpg"
+              alt="Дети в лагере Территория МЫ"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
 
-          <div className="relative max-w-6xl mx-auto px-5 py-20 md:py-32">
+          <div className="relative max-w-6xl mx-auto px-5 py-24 md:py-36 lg:py-44">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-8">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 text-white/80 text-xs font-medium px-4 py-1.5 rounded-full mb-8">
                 <Trophy className="h-3.5 w-3.5" />
                 1-е место в рейтинге лагерей Республики Татарстан
               </div>
 
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] mb-6 tracking-tight">
                 Республиканский лагерь
                 <br />
-                «Территория МЫ»
+                <span className="text-blue-400">«Территория МЫ»</span>
               </h1>
 
-              <p className="text-base md:text-lg text-white/80 leading-relaxed mb-10 max-w-lg">
+              <p className="text-base md:text-lg text-white/70 leading-relaxed mb-10 max-w-lg">
                 Интеллектуально-психологический лагерь с 27-летней историей. Авторские программы, квесты,
                 ролевые игры, профориентация и атмосфера доверия, в которой становятся личностью.
               </p>
@@ -352,7 +360,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={openBookingForm}
-                  className="bg-white text-emerald-700 hover:bg-gray-100 font-semibold shadow-lg"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/25"
                 >
                   Забронировать путёвку
                   <ExternalLink className="h-4 w-4 ml-1.5" />
@@ -361,13 +369,13 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   onClick={() => scrollTo('#interview')}
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/25 text-white hover:bg-white/10 bg-transparent"
                 >
                   Записаться на собеседование
                 </Button>
               </div>
 
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50">
                 <span className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" /> 27 лет вместе
                 </span>
@@ -382,74 +390,69 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── Смены ─── */}
+        {/* ─── Смены (горизонтальные полосы) ─── */}
         <section id="shifts" className="bg-gray-50 py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">ЛЕТО 2026</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Лето 2026</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Летние смены</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Четыре уникальные смены с авторскими программами на выбор
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
-              {shifts.map((shift) => (
+            <div className="space-y-4">
+              {shifts.map((shift, index) => (
                 <div
                   key={shift.num}
-                  className={`group relative overflow-hidden rounded-2xl bg-white border ${
-                    shift.popular ? 'border-emerald-300 ring-1 ring-emerald-300' : 'border-gray-200'
-                  } shadow-sm hover:shadow-lg transition-all duration-300`}
+                  className={`group relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 ${
+                    index % 2 === 0 ? '' : ''
+                  }`}
                 >
-                  {shift.popular && (
-                    <div className="absolute top-4 right-4 z-10 bg-amber-400 text-amber-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                      Хит сезона
-                    </div>
-                  )}
-
-                  {/* Заглушка-изображение */}
-                  <div className={`h-48 bg-gradient-to-br ${shift.gradient} flex items-center justify-center relative`}>
-                    <div className="absolute inset-0 bg-black/10" />
-                    <div className="relative opacity-70 group-hover:opacity-100 transition-opacity">
-                      {shift.icon}
-                    </div>
-                    {/* Номер смены */}
-                    <div className="absolute bottom-3 left-4 text-white/40 text-8xl font-black leading-none select-none">
-                      {String(shift.num).padStart(2, '0')}
-                    </div>
-                  </div>
-
-                  <div className="p-5 md:p-6">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Фото смены */}
+                    <div className="relative md:w-80 lg:w-96 shrink-0 h-56 md:h-auto overflow-hidden">
+                      <Image
+                        src={shift.image}
+                        alt={shift.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
                         Смена {shift.num}
-                      </span>
-                      <span className="text-gray-300">·</span>
-                      <span className="text-xs text-gray-400">{shift.type}</span>
-                    </div>
-                    <h3 className="text-lg font-bold mb-1">{shift.name}</h3>
-                    <p className="text-xs text-gray-400 mb-3 flex items-center gap-1">
-                      <Calendar className="h-3 w-3" /> {shift.dates}
-                    </p>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">{shift.description}</p>
-                    {shift.priceNote && (
-                      <p className="text-xs text-gray-400 italic mb-3">{shift.priceNote}</p>
-                    )}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <div>
-                        <span className="text-xl font-bold text-gray-900">
-                          {shift.price}
-                        </span>
-                        <span className="text-sm text-gray-400 ml-1">руб.</span>
                       </div>
-                      <Button
-                        size="sm"
-                        onClick={openBookingForm}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white"
-                      >
-                        Забронировать
-                        <ArrowRight className="h-3.5 w-3.5 ml-1" />
-                      </Button>
+                    </div>
+
+                    {/* Информация */}
+                    <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="text-xs font-medium text-blue-600">{shift.type}</span>
+                        <span className="text-gray-300">·</span>
+                        <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <Calendar className="h-3 w-3" /> {shift.dates}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl font-bold mb-2">{shift.name}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4">{shift.description}</p>
+                      {shift.priceNote && (
+                        <p className="text-xs text-gray-400 italic mb-3">{shift.priceNote}</p>
+                      )}
+
+                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <div>
+                          <span className="text-2xl font-bold">{shift.price}</span>
+                          <span className="text-sm text-gray-400 ml-1.5">руб.</span>
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={openBookingForm}
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          Забронировать
+                          <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -462,7 +465,7 @@ export default function Home() {
         <section id="advantages" className="bg-white py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">ПРЕИМУЩЕСТВА</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Преимущества</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Почему «Территория МЫ»</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Однажды побывав, школьники из года в год возвращаются снова и снова
@@ -473,9 +476,9 @@ export default function Home() {
               {advantages.map((adv) => (
                 <div
                   key={adv.title}
-                  className="group p-5 rounded-xl border border-gray-100 hover:border-emerald-200 hover:shadow-sm transition-all duration-200"
+                  className="group p-5 rounded-xl border border-gray-200 hover:border-blue-200 hover:shadow-sm transition-all duration-200"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 mb-3 group-hover:bg-emerald-100 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mb-3 group-hover:bg-blue-100 transition-colors">
                     {adv.icon}
                   </div>
                   <h3 className="font-semibold text-[15px] mb-1">{adv.title}</h3>
@@ -490,7 +493,7 @@ export default function Home() {
         <section className="bg-gray-50 py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">ЖИЗНЬ В ЛАГЕРЕ</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Жизнь в лагере</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Чем мы занимаемся</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Каждый день в лагере — это новые впечатления, открытия и друзья
@@ -527,7 +530,7 @@ export default function Home() {
         <section className="bg-white py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">ОТЗЫВЫ</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Отзывы</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Что говорят о нас</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Мнения участников и их родителей
@@ -538,9 +541,9 @@ export default function Home() {
               {testimonials.map((t) => (
                 <div
                   key={t.name}
-                  className="relative bg-gray-50 rounded-2xl p-6"
+                  className="relative bg-gray-50 rounded-2xl p-6 border border-gray-100"
                 >
-                  <Quote className="h-8 w-8 text-emerald-200 mb-3" />
+                  <Quote className="h-8 w-8 text-blue-200 mb-3" />
                   <p className="text-gray-700 text-sm leading-relaxed mb-5">
                     «{t.text}»
                   </p>
@@ -558,10 +561,10 @@ export default function Home() {
         </section>
 
         {/* ─── Собеседование ─── */}
-        <section id="interview" className="bg-emerald-50/50 py-16 md:py-24">
+        <section id="interview" className="bg-gray-50 py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">СОБЕСЕДОВАНИЕ</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Собеседование</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Как попасть в лагерь</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Это не просто покупка путёвки — это начало незабываемого отдыха
@@ -569,7 +572,7 @@ export default function Home() {
             </div>
 
             <div className="max-w-3xl mx-auto">
-              <div className="bg-white rounded-2xl border border-emerald-100 p-6 md:p-8 mb-8 shadow-sm">
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 mb-8 shadow-sm">
                 <p className="text-gray-700 leading-relaxed mb-5">
                   Мы заботимся о том, чтобы каждый ребёнок чувствовал себя комфортно. И уверены, что
                   комфорт во время смены начинается уже в городе. Вот почему мы проводим собеседование —
@@ -584,22 +587,22 @@ export default function Home() {
 
                 <div className="grid sm:grid-cols-3 gap-5 mb-8">
                   <div className="text-center">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-                      <UserCheck className="h-5 w-5 text-emerald-600" />
+                    <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3">
+                      <UserCheck className="h-5 w-5 text-blue-600" />
                     </div>
                     <p className="font-semibold text-sm mb-0.5">Знакомство</p>
                     <p className="text-xs text-gray-500">Беседа с ребёнком и родителями</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-                      <FileText className="h-5 w-5 text-emerald-600" />
+                    <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3">
+                      <FileText className="h-5 w-5 text-blue-600" />
                     </div>
                     <p className="font-semibold text-sm mb-0.5">Документы</p>
                     <p className="text-xs text-gray-500">Заполнение и подписание</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-                      <CreditCard className="h-5 w-5 text-emerald-600" />
+                    <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3">
+                      <CreditCard className="h-5 w-5 text-blue-600" />
                     </div>
                     <p className="font-semibold text-sm mb-0.5">Оплата</p>
                     <p className="text-xs text-gray-500">Оформление путёвки</p>
@@ -610,19 +613,19 @@ export default function Home() {
                   <p className="font-semibold text-sm mb-3">Что взять с собой на собеседование:</p>
                   <ul className="text-sm text-gray-600 space-y-2">
                     <li className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                       Свидетельство о рождении / паспорт участника
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                       СНИЛС ребёнка
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                       Паспорт одного из родителей
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                       Дипломы и грамоты за последние 5 лет (2-3 шт., можно копии)
                     </li>
                   </ul>
@@ -632,8 +635,8 @@ export default function Home() {
               {/* Расписание */}
               <div className="flex flex-col sm:flex-row gap-5 sm:items-center justify-between bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                    <Clock className="h-5 w-5 text-emerald-600" />
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <Clock className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
                     <p className="font-semibold text-sm">Когда</p>
@@ -641,8 +644,8 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                    <MapPin className="h-5 w-5 text-emerald-600" />
+                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <MapPin className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
                     <p className="font-semibold text-sm">Где</p>
@@ -660,7 +663,7 @@ export default function Home() {
         <section id="faq" className="bg-white py-16 md:py-24">
           <div className="max-w-3xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">ВОПРОСЫ</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Вопросы</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Частые вопросы</h2>
             </div>
 
@@ -676,7 +679,7 @@ export default function Home() {
         <section id="contacts" className="bg-gray-50 py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-5">
             <div className="text-center mb-14">
-              <p className="text-emerald-600 text-sm font-semibold mb-2 tracking-wide">КОНТАКТЫ</p>
+              <p className="text-blue-600 text-sm font-semibold mb-2 tracking-wide uppercase">Контакты</p>
               <h2 className="text-2xl md:text-3xl font-bold mb-3">Записаться на собеседование</h2>
               <p className="text-gray-500 max-w-lg mx-auto text-sm">
                 Оставьте заявку — мы перезвоним и поможем записаться на удобный вторник
@@ -685,19 +688,19 @@ export default function Home() {
 
             <div className="grid lg:grid-cols-5 gap-8 max-w-4xl mx-auto">
               {/* Контакты */}
-              <div className="lg:col-span-2 space-y-6">
+              <div className="lg:col-span-2 space-y-4">
                 <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Телефоны</p>
                   <div className="space-y-3">
                     <div>
-                      <a href="tel:+79270394222" className="flex items-center gap-2.5 text-sm font-medium text-gray-900 hover:text-emerald-700 transition-colors">
+                      <a href="tel:+79270394222" className="flex items-center gap-2.5 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors">
                         <Phone className="h-4 w-4 text-gray-400" />
                         +7 (927) 039-42-22
                       </a>
                       <p className="text-xs text-gray-400 mt-0.5 ml-6.5">Владислав Лазбинев, зам. руководителя</p>
                     </div>
                     <div className="pt-3 border-t border-gray-100">
-                      <a href="tel:+79270477740" className="flex items-center gap-2.5 text-sm font-medium text-gray-900 hover:text-emerald-700 transition-colors">
+                      <a href="tel:+79270477740" className="flex items-center gap-2.5 text-sm font-medium text-gray-900 hover:text-blue-600 transition-colors">
                         <Phone className="h-4 w-4 text-gray-400" />
                         +7 (927) 04-777-40
                       </a>
@@ -723,13 +726,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Форма заявки на собеседование */}
+              {/* Форма заявки */}
               <div className="lg:col-span-3">
                 <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
                   {formSubmitted ? (
                     <div className="text-center py-10">
-                      <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-                        <UserCheck className="h-7 w-7 text-emerald-600" />
+                      <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
+                        <UserCheck className="h-7 w-7 text-blue-600" />
                       </div>
                       <h3 className="font-bold text-lg mb-2">Заявка отправлена!</h3>
                       <p className="text-sm text-gray-500 mb-4">
@@ -737,7 +740,7 @@ export default function Home() {
                       </p>
                       <p className="text-sm text-gray-400">
                         Также можно позвонить напрямую:{' '}
-                        <a href="tel:+79270394222" className="text-emerald-700 font-medium">+7 (927) 039-42-22</a>
+                        <a href="tel:+79270394222" className="text-blue-600 font-medium">+7 (927) 039-42-22</a>
                       </p>
                     </div>
                   ) : (
@@ -778,7 +781,7 @@ export default function Home() {
                             <select
                               id="childClass"
                               required
-                              className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                              className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                               <option value="">Выберите</option>
                               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((c) => (
@@ -793,7 +796,7 @@ export default function Home() {
                           </label>
                           <select
                             id="childShift"
-                            className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           >
                             <option value="">Выберите смену</option>
                             <option value="1">Смена 1: КвесТТеРРа (20 июня — 7 июля)</option>
@@ -814,7 +817,7 @@ export default function Home() {
                         </div>
                         <Button
                           type="submit"
-                          className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold"
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
                         >
                           Отправить заявку на собеседование
                         </Button>
@@ -832,16 +835,20 @@ export default function Home() {
       </main>
 
       {/* ─── Footer ─── */}
-      <footer className="bg-gray-900 text-white">
+      <footer className="bg-gray-950 text-white">
         <div className="max-w-6xl mx-auto px-5 py-10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                <span className="text-white font-extrabold text-xs leading-none">ТМ</span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Территория МЫ"
+                width={36}
+                height={36}
+                className="rounded-lg"
+              />
               <div>
                 <span className="text-sm font-bold">Территория МЫ</span>
-                <span className="block text-[10px] text-gray-400 mt-0.5">Республиканский интеллектуально-психологический лагерь</span>
+                <span className="block text-[10px] text-gray-500 mt-0.5">Республиканский интеллектуально-психологический лагерь</span>
               </div>
             </div>
 
