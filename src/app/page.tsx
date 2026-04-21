@@ -30,7 +30,7 @@ import {
 
 /* ───────────── данные из VK ───────────── */
 
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf_example/formResponse'
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSedF5KEbMkQxju4yk68gHhRRvksn5KsOkLr-RGUsa9dLUVrRw/viewform'
 
 const shifts = [
   {
@@ -163,13 +163,53 @@ const faqItems = [
   },
 ]
 
+/*
+ * ГАЛЕРЕЯ «ЧЕМ МЫ ЗАНИМАЕМСЯ»
+ *
+ * Чтобы заменить фото:
+ *   1. Положите фото в папку public/
+ *   2. Впишите путь к файлу в поле image (например '/my-photo.jpg')
+ *   3. Оставьте gradient/icon как запасной вариант
+ *
+ * Если photo=null — показывается градиентная заглушка с иконкой.
+ */
 const galleryItems = [
-  { label: 'Квесты и приключения', gradient: 'from-gray-700 to-gray-900', icon: <Sparkles className="h-8 w-8 text-white/60" /> },
-  { label: 'Спорт и командные игры', gradient: 'from-gray-800 to-black', icon: <Trophy className="h-8 w-8 text-white/60" /> },
-  { label: 'Вечерние мероприятия', gradient: 'from-gray-600 to-gray-800', icon: <Star className="h-8 w-8 text-white/60" /> },
-  { label: 'Творческие мастерские', gradient: 'from-gray-700 to-gray-900', icon: <Heart className="h-8 w-8 text-white/60" /> },
-  { label: 'Природа и прогулки', gradient: 'from-gray-800 to-black', icon: <TreePine className="h-8 w-8 text-white/60" /> },
-  { label: 'Дружба и общение', gradient: 'from-gray-600 to-gray-800', icon: <Users className="h-8 w-8 text-white/60" /> },
+  {
+    label: 'Квесты и приключения',
+    photo: null,               // TODO: заменить на реальное фото, например '/gallery-quests.jpg'
+    gradient: 'from-gray-700 to-gray-900',
+    icon: <Sparkles className="h-8 w-8 text-white/60" />,
+  },
+  {
+    label: 'Настольные и командные игры',
+    photo: '/gallery-games.jpg',
+    gradient: 'from-gray-800 to-black',
+    icon: <Trophy className="h-8 w-8 text-white/60" />,
+  },
+  {
+    label: 'Вечерние мероприятия',
+    photo: '/gallery-evening.jpg',
+    gradient: 'from-gray-600 to-gray-800',
+    icon: <Star className="h-8 w-8 text-white/60" />,
+  },
+  {
+    label: 'Творческие мастерские',
+    photo: '/gallery-creative.jpg',
+    gradient: 'from-gray-700 to-gray-900',
+    icon: <Heart className="h-8 w-8 text-white/60" />,
+  },
+  {
+    label: 'Природа и прогулки',
+    photo: '/gallery-nature.jpg',
+    gradient: 'from-gray-800 to-black',
+    icon: <TreePine className="h-8 w-8 text-white/60" />,
+  },
+  {
+    label: 'Дружба и общение',
+    photo: null,               // TODO: заменить на реальное фото, например '/gallery-friends.jpg'
+    gradient: 'from-gray-600 to-gray-800',
+    icon: <Users className="h-8 w-8 text-white/60" />,
+  },
 ]
 
 const navLinks = [
@@ -508,14 +548,26 @@ export default function Home() {
                     i === 0 ? 'md:col-span-2 md:row-span-2' : ''
                   }`}
                 >
-                  <div className={`${i === 0 ? 'h-64 md:h-full' : 'h-48'} bg-gradient-to-br ${item.gradient} flex items-center justify-center`}>
-                    <div className="opacity-40 group-hover:opacity-60 transition-opacity">
-                      {i === 0 ? (
-                        <Sparkles className="h-16 w-16 text-white md:h-20 md:w-20" />
-                      ) : (
-                        item.icon
-                      )}
-                    </div>
+                  <div className={`${i === 0 ? 'h-64 md:h-full' : 'h-48'} relative`}>
+                    {/* Фото или градиентная заглушка */}
+                    {item.photo ? (
+                      <Image
+                        src={item.photo}
+                        alt={item.label}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} flex items-center justify-center`}>
+                        <div className="opacity-40 group-hover:opacity-60 transition-opacity">
+                          {i === 0 ? (
+                            <Sparkles className="h-16 w-16 text-white md:h-20 md:w-20" />
+                          ) : (
+                            item.icon
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
                     <p className="text-white text-sm font-medium">{item.label}</p>
