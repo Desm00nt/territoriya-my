@@ -371,33 +371,34 @@ export default function Home() {
               alt="Дети в лагере Территория МЫ"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            {/* Мобильный: сверху-вниз затемнение. Десктоп: слева-направо */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 md:bg-gradient-to-r md:from-black/80 md:via-black/60 md:to-black/30 md:bg-gradient-to-t md:from-black/80 md:via-black/60 md:to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40 md:from-black/50" />
           </div>
 
-          <div className="relative max-w-6xl mx-auto px-5 py-24 md:py-36 lg:py-44">
+          <div className="relative max-w-6xl mx-auto px-5 py-20 md:py-36 lg:py-44">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 text-white/80 text-xs font-medium px-4 py-1.5 rounded-full mb-8">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 text-white/80 text-xs font-medium px-3.5 py-1.5 rounded-full mb-6 md:mb-8">
                 <Trophy className="h-3.5 w-3.5" />
-                1-е место в рейтинге лагерей Республики Татарстан
+                1-е место в рейтинге лагерей РТ
               </div>
 
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] mb-6 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] mb-4 md:mb-6 tracking-tight">
                 Республиканский лагерь
                 <br />
                 <span className="text-blue-400">«Территория МЫ»</span>
               </h1>
 
-              <p className="text-base md:text-lg text-white/70 leading-relaxed mb-10 max-w-lg">
+              <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed mb-8 md:mb-10 max-w-lg">
                 Интеллектуально-психологический лагерь с 27-летней историей. Авторские программы, квесты,
-                ролевые игры, профориентация и атмосфера доверия, в которой становятся личностью.
+                ролевые игры, профориентация и атмосфера доверия.
               </p>
 
-              <div className="flex flex-wrap gap-3 mb-10">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 md:mb-10">
                 <Button
                   size="lg"
                   onClick={openBookingForm}
-                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/25"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-600/25 w-full sm:w-auto"
                 >
                   Забронировать путёвку
                   <ExternalLink className="h-4 w-4 ml-1.5" />
@@ -406,13 +407,13 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   onClick={() => scrollTo('#interview')}
-                  className="border-white/25 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/25 text-white hover:bg-white/10 bg-transparent w-full sm:w-auto"
                 >
                   Записаться на собеседование
                 </Button>
               </div>
 
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50">
+              <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm text-white/50">
                 <span className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" /> 27 лет вместе
                 </span>
@@ -438,52 +439,50 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 md:space-y-5">
               {shifts.map((shift, index) => (
                 <div
                   key={shift.num}
-                  className={`group relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 ${
-                    index % 2 === 0 ? '' : ''
-                  }`}
+                  className="group relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   <div className="flex flex-col md:flex-row">
                     {/* Фото смены */}
-                    <div className="relative md:w-80 lg:w-96 shrink-0 h-56 md:h-auto overflow-hidden">
+                    <div className="relative md:w-80 lg:w-96 shrink-0 h-44 sm:h-52 md:h-auto overflow-hidden">
                       <img
                         src={`/territoriya-my${shift.image}`}
                         alt={shift.name}
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
+                      <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2.5 py-1 rounded-full">
                         Смена {shift.num}
                       </div>
                     </div>
 
                     {/* Информация */}
-                    <div className="flex-1 p-6 md:p-8 flex flex-col justify-center">
-                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <div className="flex-1 p-5 md:p-8 flex flex-col justify-center">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
                         <span className="text-xs font-medium text-blue-600">{shift.type}</span>
-                        <span className="text-gray-300">·</span>
+                        <span className="text-gray-300 hidden sm:inline">·</span>
                         <span className="text-xs text-gray-400 flex items-center gap-1">
                           <Calendar className="h-3 w-3" /> {shift.dates}
                         </span>
                       </div>
 
-                      <h3 className="text-xl font-bold mb-2">{shift.name}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">{shift.description}</p>
+                      <h3 className="text-lg md:text-xl font-bold mb-1.5 md:mb-2">{shift.name}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3 md:line-clamp-none">{shift.description}</p>
                       {shift.priceNote && (
                         <p className="text-xs text-gray-400 italic mb-3">{shift.priceNote}</p>
                       )}
 
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                      <div className="flex items-center justify-between mt-auto pt-3 md:pt-4 border-t border-gray-100">
                         <div>
-                          <span className="text-2xl font-bold">{shift.price}</span>
+                          <span className="text-xl md:text-2xl font-bold">{shift.price}</span>
                           <span className="text-sm text-gray-400 ml-1.5">руб.</span>
                         </div>
                         <Button
                           size="sm"
                           onClick={openBookingForm}
-                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                          className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm"
                         >
                           Забронировать
                           <ArrowRight className="h-3.5 w-3.5 ml-1" />
@@ -536,15 +535,15 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
               {galleryItems.map((item, i) => (
                 <div
                   key={i}
-                  className={`group relative rounded-2xl overflow-hidden ${
-                    i === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                  className={`group relative rounded-xl md:rounded-2xl overflow-hidden ${
+                    i === 0 ? 'col-span-2 md:col-span-2 md:row-span-2' : ''
                   }`}
                 >
-                  <div className={`${i === 0 ? 'h-64 md:h-full' : 'h-48'} relative`}>
+                  <div className={`${i === 0 ? 'h-40 sm:h-52 md:h-full' : 'h-32 sm:h-40 md:h-48'} relative`}>
                     {/* Фото или градиентная заглушка */}
                     {item.photo ? (
                       <img
@@ -556,7 +555,7 @@ export default function Home() {
                       <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} flex items-center justify-center`}>
                         <div className="opacity-40 group-hover:opacity-60 transition-opacity">
                           {i === 0 ? (
-                            <Sparkles className="h-16 w-16 text-white md:h-20 md:w-20" />
+                            <Sparkles className="h-12 w-12 text-white md:h-20 md:w-20" />
                           ) : (
                             item.icon
                           )}
@@ -564,8 +563,8 @@ export default function Home() {
                       </div>
                     )}
                   </div>
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                    <p className="text-white text-sm font-medium">{item.label}</p>
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-3 md:p-4">
+                    <p className="text-white text-xs sm:text-sm font-medium">{item.label}</p>
                   </div>
                 </div>
               ))}
